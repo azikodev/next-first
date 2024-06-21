@@ -55,7 +55,7 @@ const Home = () => {
               {truncateTitle(product.title, 30)}
             </h2>
             <Link href={`/products/${product.id}`}>
-              <a className="text-blue-500">Details</a>
+            Details
             </Link>
           </div>
         ))}
