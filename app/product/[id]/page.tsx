@@ -1,5 +1,6 @@
 import { FaRegStar } from "react-icons/fa";
 import Link from "next/link";
+import Image from "next/image";
 interface ParamsInterface {
   params: {
     id: number;
@@ -40,7 +41,7 @@ async function SingleProduct(params: ParamsInterface) {
           </p>
         </div>
       </div>
-      <img
+      <Image
         src={product.thumbnail}
         alt={product.title}
         width={500}
