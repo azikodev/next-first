@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+
 interface Product {
   id: number;
   title: string;
@@ -16,7 +17,6 @@ const request = async (url: string) => {
     },
   });
   const data = await req.json();
-
   return data;
 };
 
