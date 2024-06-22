@@ -35,11 +35,12 @@ async function SingleProduct(params: ParamsInterface) {
             <span className="font-[700]">Products category:</span>{" "}
             {product.category}
           </p>
-          <p className="">
+          <p className="mb-[50px]">
             <span className="font-[700]">Price: </span>
             {product.price} $
           </p>
         </div>
+      <Link href="/"><button className="btn btn-primary px-[22px] py-[16px]">Back to home</button></Link>
       </div>
       <Image
         src={product.thumbnail}
@@ -47,7 +48,6 @@ async function SingleProduct(params: ParamsInterface) {
         width={500}
         height={500}
       />
-      <Link href="/"></Link>
     </div>
   );
 }
