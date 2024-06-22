@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import Image from "next/image";
 interface Product {
   id: number;
   title: string;
@@ -31,10 +31,12 @@ async function Home() {
           return (
             <Link href={`/product/${item.id}`} key={item.id} legacyBehavior>
               <a className="border p-4 block bg-[#fff] hover:shadow-lg transition-shadow duration-300">
-                <img
+                <Image
                   src={item.thumbnail}
                   alt={item.title}
                   className="w-full h-40 object-cover"
+                  width={400}
+                  height={400}
                 />
                 <h1 className="text-lg font-semibold mt-2">{item.title}</h1>
                 <p className="text-sm text-gray-600">{item.description}</p>
