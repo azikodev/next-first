@@ -1,67 +1,51 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 interface Product {
   id: number;
   title: string;
   images: string[];
+  thumbnail: string;
+  description: string;
+  price: number;
 }
 
-const truncateTitle = (title: string, maxLength: number) => {
-  return title.length > maxLength
-    ? `${title.substring(0, maxLength)}...`
-    : title;
+const request = async (url: string) => {
+  const req = await fetch(url, {
+    next: {
+      revalidate: 50,
+    },
+  });
+  const data = await req.json();
+
+  return data;
 };
 
-const Home = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("https://dummyjson.com/products");
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProducts(data.products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+async function Home() {
+  const data = await request("https://dummyjson.com/products");
+  console.log(data);
 
   return (
-    <div className="container mx-auto mt-10 max-w-[1200px]">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <div
-            className="card bg-white p-4 rounded-lg shadow-md"
-            key={product.id}
-          >
-            <Image
-              src={product.images[0]}
-              alt={product.title}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover mb-4 rounded-md"
-            />
-            <h2 className="text-xl font-semibold mb-2">
-              {truncateTitle(product.title, 30)}
-            </h2>
-            <Link href={`/products/${product.id}`}>
-            Details
+    <div className="container max-w-[1200px] m-auto">
+      <div className="grid grid-cols-4 gap-4">
+        {data.products.map((item: Product) => {
+          return (
+            <Link href={`/product/${item.id}`} key={item.id} legacyBehavior>
+              <a className="border p-4 block bg-[#fff] hover:shadow-lg transition-shadow duration-300">
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="w-full h-40 object-cover"
+                />
+                <h1 className="text-lg font-semibold mt-2">{item.title}</h1>
+                <p className="text-sm text-gray-600">{item.description}</p>
+                <p className="text-lg font-bold mt-2">${item.price}</p>
+              </a>
             </Link>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
-};
+}
 
 export default Home;

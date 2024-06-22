@@ -3,9 +3,11 @@ import React from "react";
 
 function Navbar() {
   return (
-    <div className="navbar bg-base-100 ">
+    <div className="navbar bg-base-100 container max-w-[1400px] m-auto mb-[60px]">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <Link className="btn btn-ghost text-xl" href="/">
+          daisyUI
+        </Link>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
@@ -18,7 +20,6 @@ function Navbar() {
           <li>
             <Link href="/contact">Contact</Link>
           </li>
-          
         </ul>
       </div>
     </div>
