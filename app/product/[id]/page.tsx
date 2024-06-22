@@ -1,49 +1,26 @@
 import { FaRegStar } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
-import { GetServerSidePropsContext } from "next";
-
 interface ParamsInterface {
   params: {
     id: number;
   };
 }
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  rating: number;
-  category: string;
-  thumbnail: string;
-}
+const request = async (id: number) => {
+  const req = await fetch(`${"https://dummyjson.com/products/" + id}`, {
+    next: {
+      revalidate: 1,
+    },
+  });
+  const data = await req.json();
 
-const request = async (id: number): Promise<Product | null> => {
-  try {
-    const req = await fetch(`https://dummyjson.com/products/${id}`, {
-      next: {
-        revalidate: 1,
-      },
-    });
-    if (!req.ok) {
-      throw new Error(`Error: ${req.status}`);
-    }
-    const data = await req.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching product data:", error);
-    return null;
-  }
+  return data;
 };
 
-async function SingleProduct({ params }: ParamsInterface) {
-  const product = await request(params.id);
-
-  if (!product) {
-    return <div>Failed to load product data.</div>;
-  }
-
+async function SingleProduct(params: ParamsInterface) {
+  const product = await request(params.params.id);
+  console.log(product);
   return (
     <div className="grid grid-cols-2 items-center justify-between gap-[80px] container max-w-[1200px] m-auto">
       <div>
@@ -55,11 +32,12 @@ async function SingleProduct({ params }: ParamsInterface) {
             <FaRegStar />
           </p>
           <p className="">
-            <span className="font-[700]">Product&apos;s category:</span>{" "}
+            <span className="font-[700]">Products category:</span>{" "}
             {product.category}
           </p>
           <p className="">
-            <span className="font-[700]">Price: </span> {product.price} $
+            <span className="font-[700]">Price: </span>
+            {product.price} $
           </p>
         </div>
       </div>
@@ -69,18 +47,9 @@ async function SingleProduct({ params }: ParamsInterface) {
         width={500}
         height={500}
       />
-      <Link href="/">
-        <a>Back to Home</a>
-      </Link>
+      <Link href="/"></Link>
     </div>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { id } = context.params as ParamsInterface["params"];
-  return {
-    props: { params: { id } },
-  };
 }
 
 export default SingleProduct;
