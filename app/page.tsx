@@ -26,11 +26,11 @@ async function Home() {
 
   return (
     <div className="container max-w-[1200px] m-auto">
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4 ">
         {data.products.map((item: Product) => {
           return (
             <Link href={`/product/${item.id}`} key={item.id} legacyBehavior>
-              <a className="border p-4 block bg-[#fff] hover:shadow-lg transition-shadow duration-300">
+              <a className="border p-4 block bg-[#fff] hover:shadow-lg transition-shadow duration-300 rounded-[8px]">
                 <Image
                   src={item.thumbnail}
                   alt={item.title}
