@@ -1,5 +1,5 @@
 import { FaRegStar } from "react-icons/fa";
-
+import Link from "next/link";
 interface ParamsInterface {
   params: {
     id: number;
@@ -26,18 +26,18 @@ async function SingleProduct(params: ParamsInterface) {
         <h1 className="font-bold text-3xl mb-10">{product.title}</h1>
         <p className="text-2xl mb-[20px]">{product.description}</p>
         <div className="flex flex-col gap-[8px]">
-            <p className="flex items-center gap-[8px]">
-              <span className="font-[700]">Rating:</span> {product.rating}{" "}
-              <FaRegStar />
-            </p>
-            <p className="">
-              <span className="font-[700]">Product's category:</span>{" "}
-              {product.category}
-            </p>
-            <p className="">
-              <span className="font-[700]">Price: </span>
-              {product.price}   $
-            </p>
+          <p className="flex items-center gap-[8px]">
+            <span className="font-[700]">Rating:</span> {product.rating}{" "}
+            <FaRegStar />
+          </p>
+          <p className="">
+            <span className="font-[700]">Product's category:</span>{" "}
+            {product.category}
+          </p>
+          <p className="">
+            <span className="font-[700]">Price: </span>
+            {product.price} $
+          </p>
         </div>
       </div>
       <img
@@ -46,6 +46,7 @@ async function SingleProduct(params: ParamsInterface) {
         width={500}
         height={500}
       />
+      <Link href="/"></Link>
     </div>
   );
 }
